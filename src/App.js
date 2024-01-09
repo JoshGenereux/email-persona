@@ -1,10 +1,20 @@
+import { useState } from 'react';
 import './App.css';
+import axios from 'axios';
+
+const URL = 'http://localhost:5432';
 
 function App() {
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [userText, setUserText] = useState('');
 
-    console.log('submit');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(`${URL}/gmail`);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
