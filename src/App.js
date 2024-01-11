@@ -41,11 +41,9 @@ function App() {
       const body = {
         label: label,
       };
-      const response = await axios.post(`${URL}/getLabel`, body);
+      const response = await axios.post(`${URL}/checkLabel`, body);
       if (response.data.id === label) {
         fetchMessages(label);
-      } else {
-        console.log('Failed to fetch label');
       }
     } catch (error) {
       console.log('Failed to fetch Label - ', error.message);
