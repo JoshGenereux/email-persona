@@ -33,7 +33,23 @@ function App() {
     e.preventDefault();
     const label = e.target.id;
     setClicked(label);
-    await fetchMessages(label);
+    await getLabelInfo(label);
+  };
+
+  const getLabelInfo = async (label) => {
+    try {
+      const body = {
+        label: label,
+      };
+      const response = await axios.post(`${URL}/getLabel`, body);
+      if (response.data.id === label) {
+        fetchMessages(label);
+      } else {
+        console.log('Failed to fetch label');
+      }
+    } catch (error) {
+      console.log('Failed to fetch Label - ', error.message);
+    }
   };
 
   const fetchMessages = async (label) => {
@@ -41,17 +57,10 @@ function App() {
       const body = {
         label: label,
       };
-      const response = await axios
-        .post(`${URL}/getLabel`, body)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      console.log(response);
+      const response = await axios.post(`${URL}/getMessagesFromLabel`, body);
+      console.log(response.data);
     } catch (error) {
-      console.log('Failed to fetch message - ', error.message);
+      console.log(error);
     }
   };
 
