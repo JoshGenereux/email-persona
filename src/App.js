@@ -56,9 +56,24 @@ function App() {
         label: label,
       };
       const response = await axios.post(`${URL}/getMessagesFromLabel`, body);
-      console.log(response.data);
+      const messageArray = await response?.data?.messages;
+      if (messageArray) {
+        getMessageWithID(messageArray[0]);
+      }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getMessageWithID = async (message) => {
+    try {
+      const body = {
+        message: message,
+      };
+      const response = await axios.post(`${URL}/getMessageWithID`, body);
+      console.log(response.data);
+    } catch (error) {
+      console.log('Unable to retrieve message from array or server - ', error);
     }
   };
 
