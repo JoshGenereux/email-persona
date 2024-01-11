@@ -6,6 +6,7 @@ const URL = 'http://localhost:5432';
 
 function App() {
   const [list, setList] = useState([]);
+  const [clicked, setClicked] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,8 +29,30 @@ function App() {
     }
   };
 
-  const checkList = () => {
-    console.log(list);
+  const handleLabelClick = async (e) => {
+    e.preventDefault();
+    const label = e.target.id;
+    setClicked(label);
+    await fetchMessages(label);
+  };
+
+  const fetchMessages = async (label) => {
+    try {
+      const body = {
+        label: label,
+      };
+      const response = await axios
+        .post(`${URL}/getLabel`, body)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log(response);
+    } catch (error) {
+      console.log('Failed to fetch message - ', error.message);
+    }
   };
 
   return (
@@ -40,7 +63,14 @@ function App() {
       </form>
 
       <button onClick={handleEmailButton}>email</button>
-      <div>{list.length && list.map((li) => <div>{li.id}</div>)}</div>
+      <div>
+        {list.length &&
+          list.map((li) => (
+            <div id={li.id} key={li.id} onClick={handleLabelClick}>
+              {li.id}
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
