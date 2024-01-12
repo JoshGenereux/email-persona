@@ -1,29 +1,25 @@
-import { useState } from 'react';
-import './App.css';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Header from './components/header/Header';
+import styles from './App.module.scss';
 
 const URL = 'http://localhost:5432';
 
 function App() {
   const [list, setList] = useState([]);
   const [clicked, setClicked] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.get(`${URL}/gmail`);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [labelLoading, setLabelLoading] = useState(false);
+  const [emails, setEmails] = useState([]);
 
   const handleEmailButton = async () => {
-    console.log('click');
     try {
+      setList([]);
+      setEmails([]);
+      setLabelLoading(true);
       const response = await axios.get(`${URL}/authorize`);
-      console.log(response.data.labels);
       setList([...response.data.labels]);
+      setLabelLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +48,7 @@ function App() {
 
   const fetchMessages = async (label) => {
     try {
+      setEmailLoading(true);
       const body = {
         label: label,
       };
@@ -71,7 +68,11 @@ function App() {
         message: message,
       };
       const response = await axios.post(`${URL}/getMessageWithID`, body);
-      console.log(response.data);
+      if (response) {
+        setEmails((prevMail) => [...prevMail, response]);
+        console.log(response.data);
+      }
+      setEmailLoading(false);
     } catch (error) {
       console.log('Unable to retrieve message from array or server - ', error);
     }
@@ -79,19 +80,60 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit}>
-        <input placeholder="email" />
-        <button type="submit">Submit</button>
-      </form>
+      <Header />
+      <div className={styles.container}>
+        <div className={styles.left}>
+          <button
+            className={styles.getLabelsButton}
+            onClick={handleEmailButton}
+          >
+            email
+          </button>
 
-      <button onClick={handleEmailButton}>email</button>
-      <div>
-        {list.length &&
-          list.map((li) => (
-            <div id={li.id} key={li.id} onClick={handleLabelClick}>
-              {li.id}
+          <div className={styles.labelList}>
+            <div className={styles.loading}>
+              {labelLoading && (
+                <div
+                  className={`${styles['lds-ring']} ${styles['lds-ring-land']}`}
+                >
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              )}
             </div>
-          ))}
+            {!!list.length &&
+              list.map((li) => (
+                <div
+                  className={styles.label}
+                  id={li.id}
+                  key={li.id}
+                  onClick={handleLabelClick}
+                >
+                  {li.id}
+                </div>
+              ))}
+          </div>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.emailList}>
+            <div className={styles.loading}>
+              {emailLoading && (
+                <div
+                  className={`${styles['lds-ring']} ${styles['lds-ring-land']}`}
+                >
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              )}
+            </div>
+            {!!emails &&
+              emails.map((mail, i) => <div key={i}>{mail.data.snippet}</div>)}
+          </div>
+        </div>
       </div>
     </div>
   );
