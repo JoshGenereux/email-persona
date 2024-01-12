@@ -11,7 +11,7 @@ const authController = async (req, res) => {
     });
 
     const labels = response.data.labels;
-    res.json({ labels });
+    res.status(200).json({ labels });
   } catch (error) {
     console.error('Unable to authorize gmail - ', error.message);
     res

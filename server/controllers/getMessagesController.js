@@ -6,10 +6,13 @@ const getMessagesController = async (req, res) => {
     const label = req.body.label;
     const auth = await authorize();
     const gmail = google.gmail({ version: 'v1', auth });
+
     const response = await gmail.users.messages.list({
       userId: 'me',
       labelIds: label,
+      maxResults: 10,
     });
+
     res.status(200).send(response.data);
   } catch (error) {
     console.log('Unable to access label - ', error);

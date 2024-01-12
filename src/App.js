@@ -58,7 +58,7 @@ function App() {
       const response = await axios.post(`${URL}/getMessagesFromLabel`, body);
       const messageArray = await response?.data?.messages;
       if (messageArray) {
-        getMessageWithID(messageArray[0]);
+        messageArray.map((el) => getMessageWithID(el));
       }
     } catch (error) {
       console.log(error);
