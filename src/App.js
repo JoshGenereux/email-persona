@@ -131,7 +131,12 @@ function App() {
               )}
             </div>
             {!!emails &&
-              emails.map((mail, i) => <div key={i}>{mail.data.snippet}</div>)}
+              emails.map((mail, i) => (
+                <div className={styles.email} key={i}>
+                  {`${i + 1}. `}
+                  {mail.data.snippet}
+                </div>
+              ))}
           </div>
         </div>
       </div>

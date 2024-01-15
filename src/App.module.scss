@@ -13,7 +13,7 @@
 
 .container {
   width: 100vw;
-  height: 60vh;
+  height: 70vh;
   display: flex;
 }
 
@@ -64,6 +64,11 @@
   height: 100%;
   border: red solid 1px;
   padding-top: 45px;
+}
+
+.email {
+  margin: 5px;
+  font-size: 18px;
 }
 
 // loading ring css ***

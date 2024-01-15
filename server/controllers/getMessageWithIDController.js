@@ -1,6 +1,11 @@
 const { google } = require('googleapis');
 const { authorize } = require('../authenticate');
 
+function extractEmailText(message) {
+  const text = message.payload.parts;
+  console.log(text);
+}
+
 const getMessageWithIDController = async (req, res) => {
   try {
     const messageID = req?.body?.message?.id;
@@ -11,6 +16,8 @@ const getMessageWithIDController = async (req, res) => {
       userId: 'me',
       id: messageID,
     });
+
+    extractEmailText(response.data);
 
     res.status(200).send(response.data);
   } catch (error) {
