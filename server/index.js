@@ -7,6 +7,7 @@ const authController = require('./controllers/authController');
 const labelController = require('./controllers/labelController');
 const getMessagesController = require('./controllers/getMessagesController');
 const getMessageWithIDController = require('./controllers/getMessageWithIDController');
+const readEmailController = require('./controllers/readEmailController');
 
 app.use(express.json());
 app.use(cors());
@@ -15,5 +16,6 @@ app.get('/authorize', authController);
 app.post('/checkLabel', labelController);
 app.post('/getMessagesFromLabel', getMessagesController);
 app.post('/getMessageWithID', getMessageWithIDController);
+app.post('/readEmail', readEmailController);
 
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));

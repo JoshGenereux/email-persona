@@ -71,12 +71,30 @@ function App() {
       if (response) {
         setEmails((prevMail) => [...prevMail, response]);
         console.log(response.data);
+        console.log(emails);
       }
       setEmailLoading(false);
     } catch (error) {
       console.log('Unable to retrieve message from array or server - ', error);
     }
   };
+
+  async function handleEmailclick(e) {
+    try {
+      const text = e.target.innerText.split(' ');
+      text.shift();
+      const removedNum = text.join(' ');
+      console.log(removedNum);
+      const body = {
+        message: e.target.id,
+      };
+      console.log(body);
+      const response = await axios.post(`${URL}/readEmail`, body);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="App">
@@ -132,9 +150,14 @@ function App() {
             </div>
             {!!emails &&
               emails.map((mail, i) => (
-                <div className={styles.email} key={i}>
+                <div
+                  className={styles.email}
+                  key={i}
+                  onClick={handleEmailclick}
+                  id={`email-${i + 1}`}
+                >
                   {`${i + 1}. `}
-                  {mail.data.snippet}
+                  {mail.data}
                 </div>
               ))}
           </div>

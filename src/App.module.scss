@@ -69,6 +69,10 @@
 .email {
   margin: 5px;
   font-size: 18px;
+  &:hover {
+    cursor: pointer;
+    background-color: lightgray;
+  }
 }
 
 // loading ring css ***
