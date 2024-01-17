@@ -33,6 +33,7 @@ async function saveCredentials(client) {
 async function authorize() {
   let client = await loadSavedCredentialsIfExist();
   if (client) {
+    client = await checkAndRefreshToken(client);
     return client;
   }
   client = await authenticate({
@@ -41,6 +42,18 @@ async function authorize() {
   });
   if (client.credentials) {
     await saveCredentials(client);
+  }
+  return client;
+}
+
+async function checkAndRefreshToken(client) {
+  if (client.credentials && client.credentials.expiry_date < Date.now()) {
+    console.log('Token expired, refreshing...');
+    const refreshedClient = await client.refreshAccessToken();
+
+    await saveCredentials(refreshedClient);
+    console.log('Token refreshed successfully');
+    return refreshedClient;
   }
   return client;
 }
