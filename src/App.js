@@ -81,14 +81,14 @@ function App() {
 
   async function handleEmailclick(e) {
     try {
+      // taking the email text and removing the number in front of it.
       const text = e.target.innerText.split(' ');
       text.shift();
       const removedNum = text.join(' ');
-      console.log(removedNum);
+      // adding the text into the body, with the key of message.
       const body = {
-        message: e.target.id,
+        message: removedNum,
       };
-      console.log(body);
       const response = await axios.post(`${URL}/readEmail`, body);
       console.log(response);
     } catch (error) {
