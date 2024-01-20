@@ -68,10 +68,10 @@ function App() {
         message: message,
       };
       const response = await axios.post(`${URL}/getMessageWithID`, body);
-      if (response) {
+      // TODO handle this in the back end
+      if (response && response.data !== 'No Text Content') {
         setEmails((prevMail) => [...prevMail, response]);
         console.log(response.data);
-        console.log(emails);
       }
       setEmailLoading(false);
     } catch (error) {
@@ -89,6 +89,20 @@ function App() {
       const body = {
         message: removedNum,
       };
+
+      const response = await axios.post(`${URL}/readEmail`, body);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleBatchClick() {
+    try {
+      const body = {
+        batchMessages: emails.map((email) => email.data),
+      };
+
       const response = await axios.post(`${URL}/readEmail`, body);
       console.log(response);
     } catch (error) {
@@ -135,6 +149,7 @@ function App() {
           </div>
         </div>
         <div className={styles.right}>
+          <button onClick={handleBatchClick}>Batch Sentiment</button>
           <div className={styles.emailList}>
             <div className={styles.loading}>
               {emailLoading && (

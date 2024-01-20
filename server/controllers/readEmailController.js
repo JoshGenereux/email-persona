@@ -9,20 +9,60 @@ AWS.config.update({
 });
 const comprehend = new AWS.Comprehend();
 
+const sentimentPromise = (params) => {
+  return new Promise((resolve, reject) => {
+    comprehend.detectSentiment(params, (err, data) => {
+      if (!err) {
+        resolve(data);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
+
+const targetedSentimentPromise = (params) => {
+  return new Promise((resolve, reject) => {
+    comprehend.detectTargetedSentiment(params, (err, data) => {
+      if (!err) {
+        resolve(data);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
+
+const batchTargetedSentimentPromise = (params) => {
+  return new Promise((resolve, reject) => {
+    comprehend.batchDetectSentiment(params, (err, data) => {
+      if (!err) {
+        resolve(data);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
+
 const readEmailController = async (req, res) => {
   try {
     const params = {
       LanguageCode: 'en',
       Text: req.body.message,
     };
-
-    comprehend.detectSentiment(params, (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Sentiment', data);
-      }
-    });
+    const batchParams = {
+      LanguageCode: 'en',
+      TextList: req.body.batchMessages,
+    };
+    console.log(batchParams);
+    // const sentiment = await sentimentPromise(params);
+    // const targetedSentiment = await targetedSentimentPromise(params);
+    const batchTargetedSentiment = await batchTargetedSentimentPromise(
+      batchParams
+    );
+    console.log(batchTargetedSentiment);
+    res.status(200).send(batchTargetedSentiment);
   } catch (error) {
     console.log(error);
     res.status(400).send({

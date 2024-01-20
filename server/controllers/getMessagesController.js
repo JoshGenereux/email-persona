@@ -10,7 +10,7 @@ const getMessagesController = async (req, res) => {
     const response = await gmail.users.messages.list({
       userId: 'me',
       labelIds: label,
-      maxResults: 1,
+      maxResults: 5,
     });
 
     res.status(200).send(response.data);
