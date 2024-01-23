@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../header/Header';
 import styles from './home.module.scss';
@@ -124,7 +125,7 @@ function Home() {
   };
 
   return (
-    <div className="App">
+    <div className={styles.App}>
       <Header />
       <div className={styles.container}>
         <div className={styles.left}>
@@ -192,6 +193,9 @@ function Home() {
           </div>
         </div>
       </div>
+      <Link to="/">
+        <button>Logout</button>
+      </Link>
     </div>
   );
 }
