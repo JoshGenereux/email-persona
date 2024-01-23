@@ -8,6 +8,7 @@ const labelController = require('./controllers/labelController');
 const getMessagesController = require('./controllers/getMessagesController');
 const getMessageWithIDController = require('./controllers/getMessageWithIDController');
 const readEmailController = require('./controllers/readEmailController');
+const NPLController = require('./controllers/NPLController');
 
 app.use(express.json());
 app.use(cors());
@@ -17,5 +18,6 @@ app.post('/checkLabel', labelController);
 app.post('/getMessagesFromLabel', getMessagesController);
 app.post('/getMessageWithID', getMessageWithIDController);
 app.post('/readEmail', readEmailController);
+app.post('/NPLClient', NPLController);
 
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));
