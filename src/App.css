@@ -3,3 +3,25 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@font-face {
+  font-family: 'Oswald-medium';
+  src: url('./fonts/Oswald-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-light';
+  src: url('./fonts/Oswald-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Titillium';
+  src: url('./fonts/TitilliumWeb-Regular.ttf');
+}

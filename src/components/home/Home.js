@@ -125,7 +125,7 @@ function Home() {
   };
 
   return (
-    <div className={styles.App}>
+    <div className={styles.home}>
       <Header />
       <div className={styles.container}>
         <div className={styles.left}>

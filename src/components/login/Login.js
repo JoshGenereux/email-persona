@@ -10,10 +10,23 @@ const Login = () => {
 
   return (
     <div className={styles.loginPage}>
+      <div className={styles.header}>
+        <div className={styles.headerText}>Email Persona</div>
+        <div className={styles.signUpText}>Not a member?</div>
+        <button className={styles.signUpButton}>Sign Up</button>
+      </div>
       <div className={styles.loginContainer}>
-        <Link to="Home">
-          <button onClick={handleHomeButton}>Home</button>
-        </Link>
+        <div className={styles.logo}></div>
+        <div className={styles.subText}>Dive into your email personality</div>
+        <form className={styles.inputForm}>
+          <input className={styles.usernameInput} />
+          <input className={styles.passwordInput} />
+          <Link to="Home">
+            <button className={styles.loginButton} onClick={handleHomeButton}>
+              Log In
+            </button>
+          </Link>
+        </form>
       </div>
     </div>
   );
