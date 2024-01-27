@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Header from '../header/Header';
 import styles from './home.module.scss';
 
 const URL = 'http://localhost:5432';
@@ -126,7 +125,9 @@ function Home() {
 
   return (
     <div className={styles.home}>
-      <Header />
+      <div className={styles.header}>
+        <div className={styles.headerText}>Email Persona</div>
+      </div>
       <div className={styles.container}>
         <div className={styles.left}>
           <button
