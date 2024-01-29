@@ -26,3 +26,7 @@ yarn-error.log*
 /token.json
 /.env
 /nplcredentials.json
+
+
+/server/server.cert
+/server/server.key

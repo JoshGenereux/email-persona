@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styles from './signup.module.scss';
 import { Link } from 'react-router-dom';
-import e from 'cors';
+import axios from 'axios';
+
+const URL = 'https://localhost:5432';
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
@@ -9,23 +11,18 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
-  const handleLastName = (e) => {
-    setLastName(e.target.value);
-  };
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(firstName, lastName, email, password);
+    const body = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+    console.log(body);
+
+    const response = await axios.post(`${URL}/handleInfo`, body);
   };
 
   return (
@@ -40,7 +37,7 @@ const Signup = () => {
             type="text"
             value={firstName}
             placeholder="First Name"
-            onChange={handleFirstName}
+            onChange={(e) => setFirstName(e.target.value)}
             autoComplete="given-name"
           />
           <input
@@ -48,7 +45,7 @@ const Signup = () => {
             type="text"
             value={lastName}
             placeholder="Last Name"
-            onChange={handleLastName}
+            onChange={(e) => setLastName(e.target.value)}
             autoComplete="family-name"
           />
           <input
@@ -56,7 +53,7 @@ const Signup = () => {
             type="email"
             value={email}
             placeholder="Email"
-            onChange={handleEmail}
+            onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
           />
           <input
@@ -64,7 +61,7 @@ const Signup = () => {
             type="password"
             value={password}
             placeholder="Password"
-            onChange={handlePassword}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="new-password"
           />
           <button>Submit</button>

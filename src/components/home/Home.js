@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from './home.module.scss';
 
-const URL = 'http://localhost:5432';
+const URL = 'https://localhost:5432';
 
 function Home() {
   const [list, setList] = useState([]);
