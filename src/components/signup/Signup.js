@@ -3,7 +3,7 @@ import styles from './signup.module.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const URL = 'https://localhost:5432';
+const URL = 'http://localhost:5432';
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');

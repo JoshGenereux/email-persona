@@ -30,3 +30,5 @@ yarn-error.log*
 
 /server/server.cert
 /server/server.key
+/server/localhost.crt
+/server/localhost.key

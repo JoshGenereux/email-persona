@@ -32,8 +32,7 @@ app.post('/NPLClient', NPLController);
 app.post('/handleInfo', loginController);
 
 // Use the 'https' module to create an HTTPS server
-const httpsServer = https.createServer(credentials, app);
 
-httpsServer.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server running on https://localhost:${PORT}`);
 });
